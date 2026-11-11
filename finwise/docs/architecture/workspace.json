@@ -1,0 +1,481 @@
+{
+  "configuration" : { },
+  "description" : "Персональний фінансовий консультант",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedDate" : "2026-11-11T19:41:30Z",
+  "model" : {
+    "deploymentNodes" : [ {
+      "children" : [ {
+        "children" : [ {
+          "containerInstances" : [ {
+            "containerId" : "5",
+            "environment" : "Production",
+            "id" : "23",
+            "instanceId" : 1,
+            "properties" : {
+              "structurizr.dsl.identifier" : "d68bb9e3-197c-42c4-8e0e-177366949ca8"
+            },
+            "relationships" : [ {
+              "description" : "Надсилає запити",
+              "destinationId" : "24",
+              "id" : "25",
+              "linkedRelationshipId" : "12",
+              "sourceId" : "23",
+              "technology" : "JSON/HTTPS"
+            } ],
+            "tags" : "Container Instance"
+          }, {
+            "containerId" : "6",
+            "environment" : "Production",
+            "id" : "24",
+            "instanceId" : 1,
+            "properties" : {
+              "structurizr.dsl.identifier" : "78d131be-e66c-4ca6-bb4c-d47cc39f9dba"
+            },
+            "relationships" : [ {
+              "description" : "Читає та записує дані",
+              "destinationId" : "27",
+              "id" : "28",
+              "linkedRelationshipId" : "13",
+              "sourceId" : "24",
+              "technology" : "SQL/TCP"
+            } ],
+            "tags" : "Container Instance"
+          }, {
+            "containerId" : "7",
+            "environment" : "Production",
+            "id" : "26",
+            "instanceId" : 1,
+            "properties" : {
+              "structurizr.dsl.identifier" : "6b6b5aeb-934a-4fa9-a1fa-57f377e7b0ba"
+            },
+            "relationships" : [ {
+              "description" : "Зберігає операції, читає ліміти",
+              "destinationId" : "27",
+              "id" : "29",
+              "linkedRelationshipId" : "14",
+              "sourceId" : "26",
+              "technology" : "SQL/TCP"
+            } ],
+            "tags" : "Container Instance"
+          }, {
+            "containerId" : "8",
+            "environment" : "Production",
+            "id" : "27",
+            "instanceId" : 1,
+            "properties" : {
+              "structurizr.dsl.identifier" : "c79c0ff3-6d51-49ea-b04b-f0ab06db6b18"
+            },
+            "tags" : "Container Instance"
+          } ],
+          "description" : "Запуск контейнерів застосунку",
+          "environment" : "Production",
+          "id" : "22",
+          "infrastructureNodes" : [ {
+            "description" : "Дані бази зберігаються поза контейнером",
+            "environment" : "Production",
+            "id" : "30",
+            "name" : "Постійне сховище",
+            "properties" : {
+              "structurizr.dsl.identifier" : "41967e84-bbc9-410f-a2c5-29b3abe53dea"
+            },
+            "tags" : "Element,Infrastructure Node",
+            "technology" : "Docker volume"
+          }, {
+            "description" : "Збір метрик сервера та застосунку",
+            "environment" : "Production",
+            "id" : "31",
+            "name" : "Моніторинг",
+            "properties" : {
+              "structurizr.dsl.identifier" : "45eec9ad-2ffb-45c2-befd-d0e7f89eb6e7"
+            },
+            "tags" : "Element,Infrastructure Node",
+            "technology" : "Prometheus"
+          } ],
+          "instances" : "1",
+          "name" : "Docker",
+          "properties" : {
+            "structurizr.dsl.identifier" : "68f192b8-995e-4e0e-8f36-b87316db843a"
+          },
+          "tags" : "Element,Deployment Node",
+          "technology" : "Docker Engine"
+        } ],
+        "description" : "Сервер застосунку",
+        "environment" : "Production",
+        "id" : "21",
+        "instances" : "1",
+        "name" : "Linux VM",
+        "properties" : {
+          "structurizr.dsl.identifier" : "d291b368-0d54-4c51-90c5-cfd7c686c91d"
+        },
+        "tags" : "Element,Deployment Node",
+        "technology" : "Ubuntu, 2 vCPU, 4 ГБ RAM"
+      } ],
+      "description" : "Ізольована мережа проєкту",
+      "environment" : "Production",
+      "id" : "19",
+      "infrastructureNodes" : [ {
+        "description" : "Відкрито лише порти 22, 80 і 443",
+        "environment" : "Production",
+        "id" : "20",
+        "name" : "Файрвол",
+        "properties" : {
+          "structurizr.dsl.identifier" : "79e1b30f-162d-4a3b-a657-dc1bce2dcb1b"
+        },
+        "tags" : "Element,Infrastructure Node",
+        "technology" : "Security Group"
+      } ],
+      "instances" : "1",
+      "name" : "Віртуальна приватна мережа",
+      "properties" : {
+        "structurizr.dsl.identifier" : "f980c292-eef2-48ed-9cc1-9f91bf40882e"
+      },
+      "tags" : "Element,Deployment Node",
+      "technology" : "VPC / підмережа"
+    } ],
+    "people" : [ {
+      "description" : "Веде облік доходів і витрат",
+      "id" : "1",
+      "name" : "Користувач",
+      "properties" : {
+        "structurizr.dsl.identifier" : "user"
+      },
+      "relationships" : [ {
+        "description" : "Керує бюджетом, вносить витрати, завантажує виписку",
+        "destinationId" : "5",
+        "id" : "9",
+        "sourceId" : "1",
+        "tags" : "Relationship",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Керує бюджетом, вносить витрати, завантажує виписку",
+        "destinationId" : "4",
+        "id" : "10",
+        "linkedRelationshipId" : "9",
+        "sourceId" : "1",
+        "technology" : "HTTPS"
+      }, {
+        "description" : "Надає згоду на доступ до даних",
+        "destinationId" : "2",
+        "id" : "11",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "Надає операції за згодою користувача (банківський API)",
+      "documentation" : { },
+      "id" : "2",
+      "name" : "Банк",
+      "properties" : {
+        "structurizr.dsl.identifier" : "bank"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "description" : "Доставляє повідомлення користувачу (email, месенджер)",
+      "documentation" : { },
+      "id" : "3",
+      "name" : "Сервіс сповіщень",
+      "properties" : {
+        "structurizr.dsl.identifier" : "notify"
+      },
+      "tags" : "Element,Software System,External"
+    }, {
+      "containers" : [ {
+        "description" : "Інтерфейс, графіки, налаштування",
+        "documentation" : { },
+        "id" : "5",
+        "name" : "Веб-застосунок",
+        "properties" : {
+          "structurizr.dsl.identifier" : "web"
+        },
+        "relationships" : [ {
+          "description" : "Надсилає запити",
+          "destinationId" : "6",
+          "id" : "12",
+          "sourceId" : "5",
+          "tags" : "Relationship",
+          "technology" : "JSON/HTTPS"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "React"
+      }, {
+        "description" : "Витрати, категорії, ліміти, прогноз",
+        "documentation" : { },
+        "id" : "6",
+        "name" : "Backend API",
+        "properties" : {
+          "structurizr.dsl.identifier" : "api"
+        },
+        "relationships" : [ {
+          "description" : "Читає та записує дані",
+          "destinationId" : "8",
+          "id" : "13",
+          "sourceId" : "6",
+          "tags" : "Relationship",
+          "technology" : "SQL/TCP"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Python (FastAPI)"
+      }, {
+        "description" : "Отримання операцій з банку, категоризація, перевірка лімітів",
+        "documentation" : { },
+        "id" : "7",
+        "name" : "Фоновий воркер",
+        "properties" : {
+          "structurizr.dsl.identifier" : "worker"
+        },
+        "relationships" : [ {
+          "description" : "Зберігає операції, читає ліміти",
+          "destinationId" : "8",
+          "id" : "14",
+          "sourceId" : "7",
+          "tags" : "Relationship",
+          "technology" : "SQL/TCP"
+        }, {
+          "description" : "Отримує операції",
+          "destinationId" : "2",
+          "id" : "15",
+          "sourceId" : "7",
+          "tags" : "Relationship",
+          "technology" : "Банківський API"
+        }, {
+          "description" : "Надсилає сповіщення про ліміти",
+          "destinationId" : "3",
+          "id" : "17",
+          "sourceId" : "7",
+          "tags" : "Relationship",
+          "technology" : "HTTPS"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Python"
+      }, {
+        "description" : "Операції, категорії, ліміти, налаштування",
+        "documentation" : { },
+        "id" : "8",
+        "name" : "База даних",
+        "properties" : {
+          "structurizr.dsl.identifier" : "db"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "PostgreSQL"
+      } ],
+      "description" : "Облік, категоризація, ліміти та прогноз витрат",
+      "documentation" : { },
+      "id" : "4",
+      "name" : "FinWise",
+      "properties" : {
+        "structurizr.dsl.identifier" : "finwise"
+      },
+      "relationships" : [ {
+        "description" : "Отримує операції",
+        "destinationId" : "2",
+        "id" : "16",
+        "linkedRelationshipId" : "15",
+        "sourceId" : "4",
+        "technology" : "Банківський API"
+      }, {
+        "description" : "Надсилає сповіщення про ліміти",
+        "destinationId" : "3",
+        "id" : "18",
+        "linkedRelationshipId" : "17",
+        "sourceId" : "4",
+        "technology" : "HTTPS"
+      } ],
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "FinWise",
+  "properties" : {
+    "structurizr.inspection.error" : "7",
+    "structurizr.dsl" : "d29ya3NwYWNlICJGaW5XaXNlIiAi0J/QtdGA0YHQvtC90LDQu9GM0L3QuNC5INGE0ZbQvdCw0L3RgdC+0LLQuNC5INC60L7QvdGB0YPQu9GM0YLQsNC90YIiIHsKCiAgbW9kZWwgewogICAgdXNlciA9IHBlcnNvbiAi0JrQvtGA0LjRgdGC0YPQstCw0YciICLQktC10LTQtSDQvtCx0LvRltC6INC00L7RhdC+0LTRltCyINGWINCy0LjRgtGA0LDRgiIKICAgIGJhbmsgPSBzb2Z0d2FyZVN5c3RlbSAi0JHQsNC90LoiICLQndCw0LTQsNGUINC+0L/QtdGA0LDRhtGW0Zcg0LfQsCDQt9Cz0L7QtNC+0Y4g0LrQvtGA0LjRgdGC0YPQstCw0YfQsCAo0LHQsNC90LrRltCy0YHRjNC60LjQuSBBUEkpIiAiRXh0ZXJuYWwiCiAgICBub3RpZnkgPSBzb2Z0d2FyZVN5c3RlbSAi0KHQtdGA0LLRltGBINGB0L/QvtCy0ZbRidC10L3RjCIgItCU0L7RgdGC0LDQstC70Y/RlCDQv9C+0LLRltC00L7QvNC70LXQvdC90Y8g0LrQvtGA0LjRgdGC0YPQstCw0YfRgyAoZW1haWwsINC80LXRgdC10L3QtNC20LXRgCkiICJFeHRlcm5hbCIKCiAgICBmaW53aXNlID0gc29mdHdhcmVTeXN0ZW0gIkZpbldpc2UiICLQntCx0LvRltC6LCDQutCw0YLQtdCz0L7RgNC40LfQsNGG0ZbRjywg0LvRltC80ZbRgtC4INGC0LAg0L/RgNC+0LPQvdC+0Lcg0LLQuNGC0YDQsNGCIiB7CiAgICAgIHdlYiA9IGNvbnRhaW5lciAi0JLQtdCxLdC30LDRgdGC0L7RgdGD0L3QvtC6IiAi0IbQvdGC0LXRgNGE0LXQudGBLCDQs9GA0LDRhNGW0LrQuCwg0L3QsNC70LDRiNGC0YPQstCw0L3QvdGPIiAiUmVhY3QiCiAgICAgIGFwaSA9IGNvbnRhaW5lciAiQmFja2VuZCBBUEkiICLQktC40YLRgNCw0YLQuCwg0LrQsNGC0LXQs9C+0YDRltGXLCDQu9GW0LzRltGC0LgsINC/0YDQvtCz0L3QvtC3IiAiUHl0aG9uIChGYXN0QVBJKSIKICAgICAgd29ya2VyID0gY29udGFpbmVyICLQpNC+0L3QvtCy0LjQuSDQstC+0YDQutC10YAiICLQntGC0YDQuNC80LDQvdC90Y8g0L7Qv9C10YDQsNGG0ZbQuSDQtyDQsdCw0L3QutGDLCDQutCw0YLQtdCz0L7RgNC40LfQsNGG0ZbRjywg0L/QtdGA0LXQstGW0YDQutCwINC70ZbQvNGW0YLRltCyIiAiUHl0aG9uIgogICAgICBkYiAgPSBjb250YWluZXIgItCR0LDQt9CwINC00LDQvdC40YUiICLQntC/0LXRgNCw0YbRltGXLCDQutCw0YLQtdCz0L7RgNGW0ZcsINC70ZbQvNGW0YLQuCwg0L3QsNC70LDRiNGC0YPQstCw0L3QvdGPIiAiUG9zdGdyZVNRTCIgIkRhdGFiYXNlIgogICAgfQoKICAgIHVzZXIgLT4gd2ViICLQmtC10YDRg9GUINCx0Y7QtNC20LXRgtC+0LwsINCy0L3QvtGB0LjRgtGMINCy0LjRgtGA0LDRgtC4LCDQt9Cw0LLQsNC90YLQsNC20YPRlCDQstC40L/QuNGB0LrRgyIgIkhUVFBTIgogICAgdXNlciAtPiBiYW5rICLQndCw0LTQsNGUINC30LPQvtC00YMg0L3QsCDQtNC+0YHRgtGD0L8g0LTQviDQtNCw0L3QuNGFIgogICAgd2ViIC0+IGFwaSAi0J3QsNC00YHQuNC70LDRlCDQt9Cw0L/QuNGC0LgiICJKU09OL0hUVFBTIgogICAgYXBpIC0+IGRiICLQp9C40YLQsNGUINGC0LAg0LfQsNC/0LjRgdGD0ZQg0LTQsNC90ZYiICJTUUwvVENQIgogICAgd29ya2VyIC0+IGRiICLQl9Cx0LXRgNGW0LPQsNGUINC+0L/QtdGA0LDRhtGW0ZcsINGH0LjRgtCw0ZQg0LvRltC80ZbRgtC4IiAiU1FML1RDUCIKICAgIHdvcmtlciAtPiBiYW5rICLQntGC0YDQuNC80YPRlCDQvtC/0LXRgNCw0YbRltGXIiAi0JHQsNC90LrRltCy0YHRjNC60LjQuSBBUEkiCiAgICB3b3JrZXIgLT4gbm90aWZ5ICLQndCw0LTRgdC40LvQsNGUINGB0L/QvtCy0ZbRidC10L3QvdGPINC/0YDQviDQu9GW0LzRltGC0LgiICJIVFRQUyIKCiAgICBsaXZlID0gZGVwbG95bWVudEVudmlyb25tZW50ICJQcm9kdWN0aW9uIiB7CiAgICAgIGRlcGxveW1lbnROb2RlICLQktGW0YDRgtGD0LDQu9GM0L3QsCDQv9GA0LjQstCw0YLQvdCwINC80LXRgNC10LbQsCIgItCG0LfQvtC70YzQvtCy0LDQvdCwINC80LXRgNC10LbQsCDQv9GA0L7RlNC60YLRgyIgIlZQQyAvINC/0ZbQtNC80LXRgNC10LbQsCIgewogICAgICAgIGluZnJhc3RydWN0dXJlTm9kZSAi0KTQsNC50YDQstC+0LsiICLQktGW0LTQutGA0LjRgtC+INC70LjRiNC1INC/0L7RgNGC0LggMjIsIDgwINGWIDQ0MyIgIlNlY3VyaXR5IEdyb3VwIgoKICAgICAgICBkZXBsb3ltZW50Tm9kZSAiTGludXggVk0iICLQodC10YDQstC10YAg0LfQsNGB0YLQvtGB0YPQvdC60YMiICJVYnVudHUsIDIgdkNQVSwgNCDQk9CRIFJBTSIgewogICAgICAgICAgZGVwbG95bWVudE5vZGUgIkRvY2tlciIgItCX0LDQv9GD0YHQuiDQutC+0L3RgtC10LnQvdC10YDRltCyINC30LDRgdGC0L7RgdGD0L3QutGDIiAiRG9ja2VyIEVuZ2luZSIgewogICAgICAgICAgICBjb250YWluZXJJbnN0YW5jZSB3ZWIKICAgICAgICAgICAgY29udGFpbmVySW5zdGFuY2UgYXBpCiAgICAgICAgICAgIGNvbnRhaW5lckluc3RhbmNlIHdvcmtlcgogICAgICAgICAgICBjb250YWluZXJJbnN0YW5jZSBkYgogICAgICAgICAgICBpbmZyYXN0cnVjdHVyZU5vZGUgItCf0L7RgdGC0ZbQudC90LUg0YHRhdC+0LLQuNGJ0LUiICLQlNCw0L3RliDQsdCw0LfQuCDQt9Cx0LXRgNGW0LPQsNGO0YLRjNGB0Y8g0L/QvtC30LAg0LrQvtC90YLQtdC50L3QtdGA0L7QvCIgIkRvY2tlciB2b2x1bWUiCiAgICAgICAgICAgIGluZnJhc3RydWN0dXJlTm9kZSAi0JzQvtC90ZbRgtC+0YDQuNC90LMiICLQl9Cx0ZbRgCDQvNC10YLRgNC40Log0YHQtdGA0LLQtdGA0LAg0YLQsCDQt9Cw0YHRgtC+0YHRg9C90LrRgyIgIlByb21ldGhldXMiCiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICB9CiAgfQoKICB2aWV3cyB7CiAgICBzeXN0ZW1Db250ZXh0IGZpbndpc2UgIkNvbnRleHQiIHsKICAgICAgaW5jbHVkZSAqCiAgICAgIGF1dG9sYXlvdXQgdGIKICAgIH0KCiAgICBjb250YWluZXIgZmlud2lzZSAiQ29udGFpbmVycyIgewogICAgICBpbmNsdWRlICoKICAgICAgYXV0b2xheW91dCB0YgogICAgfQoKICAgIGRlcGxveW1lbnQgZmlud2lzZSAiUHJvZHVjdGlvbiIgIkRlcGxveW1lbnQiIHsKICAgICAgaW5jbHVkZSAqCiAgICAgIGF1dG9sYXlvdXQgbHIKICAgIH0KCiAgICBzdHlsZXMgewogICAgICBlbGVtZW50ICJQZXJzb24iIHsKICAgICAgICBzaGFwZSBQZXJzb24KICAgICAgICBiYWNrZ3JvdW5kICM0MzA4NDcKICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgIH0KICAgICAgZWxlbWVudCAiRXh0ZXJuYWwiIHsKICAgICAgICBiYWNrZ3JvdW5kICM5MTQxOTcKICAgICAgICBjb2xvciAjZmZmZmZmCiAgICAgIH0KICAgICAgZWxlbWVudCAiRGF0YWJhc2UiIHsKICAgICAgICBzaGFwZSBDeWxpbmRlcgogICAgICAgIGJhY2tncm91bmQgIzlkODA5ZgogICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgfQogICAgfQoKICAgIHRoZW1lIGRlZmF1bHQKICB9Cn0=",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "configuration" : {
+      "styles" : {
+        "elements" : [ {
+          "background" : "#9d809f",
+          "color" : "#ffffff",
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        }, {
+          "background" : "#914197",
+          "color" : "#ffffff",
+          "tag" : "External"
+        }, {
+          "background" : "#430847",
+          "color" : "#ffffff",
+          "shape" : "Person",
+          "tag" : "Person"
+        } ]
+      },
+      "terminology" : { },
+      "themes" : [ "https://static.structurizr.com/themes/default/theme.json" ]
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "Containers",
+      "name" : "Container View: FinWise",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "11"
+      }, {
+        "id" : "12"
+      }, {
+        "id" : "13"
+      }, {
+        "id" : "14"
+      }, {
+        "id" : "15"
+      }, {
+        "id" : "17"
+      }, {
+        "id" : "9"
+      } ],
+      "softwareSystemId" : "4"
+    } ],
+    "deploymentViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "19",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "20",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "21",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "24",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "26",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "27",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "30",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "31",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "environment" : "Production",
+      "key" : "Deployment",
+      "name" : "Deployment View: FinWise - Production",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "25"
+      }, {
+        "id" : "28"
+      }, {
+        "id" : "29"
+      } ],
+      "softwareSystemId" : "4"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "Context",
+      "name" : "System Context View: FinWise",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "10"
+      }, {
+        "id" : "11"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "18"
+      } ],
+      "softwareSystemId" : "4"
+    } ]
+  }
+}
