@@ -77,6 +77,7 @@ FinWise допомагає користувачеві зрозуміти, куд
 | [0001](docs/adr/0001-modular-monolith.md) | Модульний моноліт із окремим фоновим воркером | Accepted |
 | [0002](docs/adr/0002-postgresql.md) | PostgreSQL як основна база даних | Accepted |
 | [0003](docs/adr/0003-bank-data-adapter.md) | Адаптер джерела банківських даних (API та CSV) | Accepted |
+| [0004](docs/adr/0004-containers-base-images-and-networks.md) | Базові образи та ізоляція мереж у контейнерах | Accepted |
 
 ## 8. Структура репозиторію
 
