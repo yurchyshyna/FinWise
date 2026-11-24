@@ -1,4 +1,5 @@
-"""Backend API системи FinWise (мінімальна версія для контейнеризації)."""
+"""мінімальна версія для контейнеризації"""
+
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, HTTPException
@@ -9,7 +10,7 @@ from . import db
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    db.init_db()  # створюємо таблицю, якщо її ще немає
+    db.init_db()
     yield
 
 

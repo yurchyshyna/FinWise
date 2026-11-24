@@ -15,7 +15,7 @@ export default function App() {
       const response = await fetch('/api/transactions')
       setItems(await response.json())
       setError('')
-    } catch (e) {
+    } catch {
       setStatus('недоступний')
       setError('Не вдалося зв’язатися з API')
     }
