@@ -16,3 +16,19 @@ __pycache__/
 .idea/
 .DS_Store
 Thumbs.db
+
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!terraform.tfvars.example
+terraform.tfvars
+crash.log
+
+# Ключі
+*.pem
+*.key
+id_*
+

@@ -78,6 +78,8 @@ FinWise допомагає користувачеві зрозуміти, куд
 | [0002](docs/adr/0002-postgresql.md) | PostgreSQL як основна база даних | Accepted |
 | [0003](docs/adr/0003-bank-data-adapter.md) | Адаптер джерела банківських даних (API та CSV) | Accepted |
 | [0004](docs/adr/0004-containers-base-images-and-networks.md) | Базові образи та ізоляція мереж у контейнерах | Accepted |
+| [0005](docs/adr/0005-ci-cd-platform-and-quality-gates.md) | Платформа CI/CD, версіонування артефактів і Quality Gates | Accepted |
+| [0006](docs/adr/0006-infrastructure-as-code.md) | Платформа AWS, зберігання стану Terraform і розподіл ролей Terraform та Ansible | Accepted |
 
 ## 8. Структура репозиторію
 
