@@ -36,7 +36,9 @@ FinWise допомагає користувачеві зрозуміти, куд
 
 ## 4. Методологія та DevOps
 
-Обрано Scrum зі спринтами по одному-два тижні. Користувацькі історії складають backlog продукту, а на початку кожного спринту з нього обирається набір історій для виконання. DevOps-практики вбудовуються в кожен спринт:
+Обрано Scrum зі спринтами по одному-два тижні. Користувацькі історії складають backlog продукту, а на початку кожного спринту з нього обирається набір історій для виконання.
+Зміни до коду вносяться за схемою GitHub Flow: окрема гілка для кожної зміни, Pull Request з автоматичними перевірками й злиття в main.
+DevOps-практики вбудовуються в кожен спринт:
 
 1. увесь код, інфраструктура та архітектурна документація зберігаються в Git;
 2. кожна зміна проходить автоматичну збірку та перевірку (CI);
@@ -53,10 +55,55 @@ FinWise допомагає користувачеві зрозуміти, куд
 | Backend API та воркер | Python (FastAPI) |
 | База даних | PostgreSQL |
 | Інфраструктура | Docker, Prometheus |
+| CI | GitHub Actions, GHCR, Trivy, hadolint |
+| Інфраструктура як код | Terraform (AWS), Ansible |
+| Моніторинг | Prometheus |
 
 ## 6. Архітектура
 
 Архітектура описана як код у форматі Structurizr DSL: [`docs/architecture/workspace.dsl`](docs/architecture/workspace.dsl). З одного опису будуються три представлення: System Context, Container та Deployment.
+
+## Запуск локально
+
+1. Скопіювати файл із прикладом змінних оточення та за потреби змінити значення:
+   ```
+   cp .env.example .env
+   ```
+2. Запустити всі сервіси:
+   ```
+   docker compose up --build
+   ```
+3. Відкрити застосунок у браузері: http://localhost:8080
+
+Перевірка стану API: `GET /api/health`. Зупинка: `docker compose down`.
+
+## CI
+
+Конвеєр описано в [`.github/workflows/ci.yml`](.github/workflows/ci.yml) і запускається на кожен Pull Request та на push у main.
+
+| Job | Що перевіряє |
+|---|---|
+| Backend | flake8 та модульні тести pytest |
+| Frontend | ESLint |
+| Dockerfiles | hadolint |
+| Image (api, web) | збірка образу, сканування Trivy (HIGH, CRITICAL), публікація в GHCR |
+
+Образи публікуються в GitHub Container Registry з тегами `sha-<коміт>`, `latest` та семантичною версією (для тегів `vX.Y.Z`). Гілка main захищена: злити Pull Request можна лише після проходження всіх обов'язкових перевірок.
+
+## Інфраструктура як код
+
+Сервер у хмарі AWS (регіон eu-north-1) створюється й налаштовується кодом.
+
+- [`infra/terraform`](infra/terraform) — Terraform створює VPC, підмережу, інтернет-шлюз, таблицю маршрутів, Security Group (22 лише з IP адміністратора, 80 і 443), SSH-ключ і віртуальну машину Ubuntu 24.04.
+- [`infra/ansible`](infra/ansible) — ідемпотентний playbook оновлює систему, налаштовує фаєрвол ufw і fail2ban та встановлює Docker з Compose.
+
+Порядок роботи:
+1. `cp terraform.tfvars.example terraform.tfvars` і заповнити значення (файл не потрапляє в Git).
+2. `terraform init`, `terraform plan`, `terraform apply`.
+3. Адресу сервера з `terraform output` вписати в `infra/ansible/inventory.ini`.
+4. `ansible-playbook -i inventory.ini playbook.yml`.
+
+Файл стану Terraform зберігається локально й не додається до репозиторію. Обґрунтування вибору інструментів: [ADR-0006](docs/adr/0006-infrastructure-as-code.md).
 
 ### System Context
 
@@ -86,13 +133,15 @@ FinWise допомагає користувачеві зрозуміти, куд
 ```
 finwise/
 ├── README.md
+├── docker-compose.yml
+├── .env.example
+├── .github/workflows/ci.yml
 ├── docs/
-│   ├── architecture/
-│   │   ├── workspace.dsl
-│   │   ├── context.png
-│   │   ├── containers.png
-│   │   └── deployment.png
-│   └── adr/
+│   ├── architecture/   (workspace.dsl, context/containers/deployment.png)
+│   └── adr/            (ADR 0001–0006)
 ├── frontend/
-└── backend/
+├── backend/
+└── infra/
+    ├── terraform/
+    └── ansible/
 ```
